@@ -1,14 +1,13 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Map;
 
 public class CardAdministrator {
 
-    public Map<String, String > readText(Map<String, String> empty, String needRead){
+    public MyMap<String, String[]> readText(MyMap<String, String[]> empty, String needRead){
         // Variables necesarias para poder leer y guardar
-        String readTxt, readContainer;
-        String[] cardContainer = new String[2];
+        String readTxt, readContainer, key = "";
+        String[] cardContainer = new String[1];
 
         // Leyendo el archivo de texto y agregandolo a la compuerta
         try {
@@ -23,13 +22,13 @@ public class CardAdministrator {
                     if(readTxt.charAt(i) != '|'){
                         readContainer += readTxt.charAt(i);
                     }else{
-                        cardContainer[0] = readContainer;
+                        key = readContainer;
                         readContainer = "";
                     }
                 }
-                cardContainer[1] = readContainer;
+                cardContainer[0] = readContainer;
 
-                empty.put(cardContainer[0], cardContainer[1]);
+                empty.put(key, cardContainer);
             }
             bf.close();
         } catch (IOException e) {
@@ -37,6 +36,23 @@ public class CardAdministrator {
         }
 
         return empty;
+    }
+
+    public MyMap<String, String[]> addNewPlayerCard(MyMap<String, String[]> playerCards, String[] insert){
+        String[] insertA = new String[2];
+
+        // Verificando si ya esta en el mapa
+        if(playerCards.containsKey(insert[0])){
+            insertA = playerCards.get(insert[0]);
+            insertA[1] = Integer.toString(Integer.parseInt(insertA[1]) + 1);
+            playerCards.replace(insert[0], playerCards.get(insert[0]), insertA);
+        // Metiendo si no hay
+        }else{
+            insertA[0] = insert[1];
+            insertA[1] = "1";
+            playerCards.put(insert[0], insertA);
+        }
+        return playerCards;
     }
 
 }

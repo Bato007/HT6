@@ -1,8 +1,3 @@
-import java.util.Map;
-import java.util.HashMap;
-import java.util.TreeMap;
-import java.util.LinkedHashMap;
-
 /**
  * @author Brandon Hernández 19376
  * @author Carlos Ráxtum
@@ -17,17 +12,17 @@ public class Factory{
      * Devuelve una instancia de un map
      *
      * @param mapType es la instancia que quiere
-     * @return una instancia
+     * @return una instancia de un mapa
      */
-    public Map<String, String > getMyMap(String mapType){
+    public MyMap<String, String[]> getMyMap(String mapType){
 
         switch (mapType){
             case "1":
-                return new HashMap<>();
+                return new MyHashMap<>();
             case "2":
-                return new TreeMap<>();
+                return new MyTreeMap<>();
             default:
-                return new LinkedHashMap<>();
+                return new MyLinkedHashMap<>();
         }
 
     }

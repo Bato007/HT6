@@ -1,5 +1,5 @@
 import java.util.*;
-import java.io.*;
+
 /**
  * @author Brandon Hernández 19376
  * @author Carlos Ráxtum
@@ -13,7 +13,8 @@ public class Main {
         Factory factory = new Factory();
         CardAdministrator cards = new CardAdministrator();
         Scanner input = new Scanner(System.in);
-        Map<String, String> cardsDesc, playersDesc;
+        MyMap<String, String[]> cardsDesc, playersDesc;
+        String[] inputCard = new String[2];
         String option;
 
         // Pidiendole la implementación al usuario
@@ -54,19 +55,42 @@ public class Main {
                     // Verificando que exista
                     if(cardsDesc.containsKey(option)){
 
+                        // Agregando
+                        inputCard[0] = option;
+                        inputCard[1] = cardsDesc.get(option)[0];
+
+                        cards.addNewPlayerCard(playersDesc, inputCard);
+                        System.out.println("| Se ha agregado la carta " + option + " a su maso");
                     }else{
-                        System.out.print("| La carta: " + option + " no se encuentra en la coleccion");
+                        System.out.println("| La carta: " + option + " no se encuentra en la coleccion");
                     }
 
                     break;
+
+                // Mostrando el valor de una carta
                 case "2":
+                    System.out.print("| Ingrese la carta que desea consultar: ");
+                    option = input.nextLine();
+
+                    if(cardsDesc.containsKey(option)){
+                        System.out.println("| La carta que selecciono es de tipo: " + cardsDesc.get(option)[0]);
+                    }else{
+                        System.out.println("| La carta: " + option + " no se encuentra en la coleccion");
+                    }
+
                     break;
+
                 case "3":
+
                     break;
+
                 case "4":
                     break;
+
                 case "5":
+                    System.out.println("| Aquí se muestran las cartas: ");
                     break;
+
                 case "6":
                     break;
 
