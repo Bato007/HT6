@@ -5,7 +5,6 @@
  * Se encarga de mandar una instancia de un
  * map<k,v> en el que ambos son strings
  */
-
 public class Factory{
 
     /**

@@ -1,5 +1,5 @@
+import java.io.IOException;
 import java.util.*;
-
 /**
  * @author Brandon Hernández 19376
  * @author Carlos Ráxtum
@@ -13,8 +13,14 @@ public class Main {
         Factory factory = new Factory();
         CardAdministrator cards = new CardAdministrator();
         Scanner input = new Scanner(System.in);
-        MyMap<String, String[]> cardsDesc, playersDesc;
+
+        // Implementaciones de mapas
+        MyMap<String, String[]> cardsDesc;
+        MyMap<String, String[]> playersDesc;
+
+        // Atributos
         String[] inputCard = new String[2];
+        String[][] showCards;
         String option;
 
         // Pidiendole la implementación al usuario
@@ -29,7 +35,7 @@ public class Main {
         cardsDesc = factory.getMyMap(option);
         playersDesc = factory.getMyMap(option);
 
-        cardsDesc = cards.readText(cardsDesc,"Cards_desc.txt");
+        cards.readText(cardsDesc,"Cards_desc.txt");
 
         // Empezando el menu
         while(!option.equals("7")){
@@ -59,12 +65,12 @@ public class Main {
                         inputCard[0] = option;
                         inputCard[1] = cardsDesc.get(option)[0];
 
-                        cards.addNewPlayerCard(playersDesc, inputCard);
+                        playersDesc = cards.addNewPlayerCard(playersDesc, inputCard);
                         System.out.println("| Se ha agregado la carta " + option + " a su maso");
                     }else{
                         System.out.println("| La carta: " + option + " no se encuentra en la coleccion");
                     }
-
+                    option = "";
                     break;
 
                 // Mostrando el valor de una carta
@@ -77,21 +83,62 @@ public class Main {
                     }else{
                         System.out.println("| La carta: " + option + " no se encuentra en la coleccion");
                     }
-
+                    option = "";
                     break;
 
+                // Mostrar el maso del jugador
                 case "3":
+                    System.out.println("| Estas son las cartas en su coleccion: ");
+                    showCards = cards.showCards(playersDesc);
 
+                    if(showCards.length != 0){
+                        for(int i = 0; i < showCards.length; i++){
+                            System.out.println("| La carta " + showCards[i][0] + " es de tipo " +
+                                    showCards[i][1] + " y existen " + showCards[i][2] + " de su tipo");
+                        }
+                    }else {
+                        System.out.println("| No hay cartas que mostrar");
+                    }
+                    option = "";
                     break;
 
+                // Mostrando el maso del jugador ordenado
                 case "4":
+                    System.out.println("| Estas son las cartas en su coleccion: ");
+                    showCards = cards.showCards(playersDesc);
+
+                    if(showCards.length != 0){
+                        for(int i = 0; i < showCards.length; i++){
+                            System.out.println("| La carta " + showCards[i][0] + " es de tipo " + showCards[i][1]
+                            + " y posee " + showCards[i][2] + " en su maso");
+                        }
+                    }else {
+                        System.out.println("| No hay cartas que mostrar");
+                    }
+                    option = "";
                     break;
 
+                // Mostrar la coleccion
                 case "5":
-                    System.out.println("| Aquí se muestran las cartas: ");
+                    System.out.println("| Estas son las cartas en la coleccion:\n");
+                    showCards = cards.showCards(cardsDesc);
+
+                    for(int i = 0; i < showCards.length; i++){
+                        System.out.println("| La carta " + showCards[i][0] + " es de tipo " + showCards[i][1]);
+                    }
+                    option = "";
                     break;
 
+                // Mostrar la coleccion ordenada
                 case "6":
+                    System.out.println("| Estas son las cartas ordenadas en la coleccion:\n");
+                    showCards = cards.showCards(cardsDesc);
+                    showCards = cards.sort(showCards);
+
+                    for(int i = 0; i < showCards.length; i++){
+                        System.out.println( i +"| La carta " + showCards[i][0] + " es de tipo " + showCards[i][1]);
+                    }
+                    option = "";
                     break;
 
                 // Casos en los que se sale u opcion incorrecta
@@ -100,6 +147,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("|\n|-----Ingrese una opcion valida-----");
+                    option = "";
                     break;
             }
 
