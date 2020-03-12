@@ -15,8 +15,8 @@ public class Main {
         Scanner input = new Scanner(System.in);
 
         // Implementaciones de mapas
-        MyMap<String, String[]> cardsDesc;
-        MyMap<String, String[]> playersDesc;
+        MyMap<String, String> cardsDesc;
+        MyMap<String, String> playersDesc;
 
         // Atributos
         String[] inputCard = new String[2];
@@ -35,7 +35,7 @@ public class Main {
         cardsDesc = factory.getMyMap(option);
         playersDesc = factory.getMyMap(option);
 
-        cards.readText(cardsDesc,"Cards_desc.txt");
+        cards.readText(cardsDesc,"Cards_desc.txt", 8861);
 
         // Empezando el menu
         while(!option.equals("7")){
@@ -63,13 +63,14 @@ public class Main {
 
                         // Agregando
                         inputCard[0] = option;
-                        inputCard[1] = cardsDesc.get(option)[0];
+                        inputCard[1] = cardsDesc.get(option);
 
                         playersDesc = cards.addNewPlayerCard(playersDesc, inputCard);
                         System.out.println("| Se ha agregado la carta " + option + " a su maso");
                     }else{
                         System.out.println("| La carta: " + option + " no se encuentra en la coleccion");
                     }
+
                     option = "";
                     break;
 
@@ -79,7 +80,7 @@ public class Main {
                     option = input.nextLine();
 
                     if(cardsDesc.containsKey(option)){
-                        System.out.println("| La carta que selecciono es de tipo: " + cardsDesc.get(option)[0]);
+                        System.out.println("| La carta que selecciono es de tipo: " + cardsDesc.get(option));
                     }else{
                         System.out.println("| La carta: " + option + " no se encuentra en la coleccion");
                     }
@@ -89,10 +90,10 @@ public class Main {
                 // Mostrar el maso del jugador
                 case "3":
                     System.out.println("| Estas son las cartas en su coleccion: ");
-                    showCards = cards.showCards(playersDesc);
+                    showCards = cards.showCards(playersDesc, true);
 
-                    if(showCards.length != 0){
-                        for(int i = 0; i < showCards.length; i++){
+                    if(playersDesc.size() != 0){
+                        for(int i = 0; i < playersDesc.size(); i++){
                             System.out.println("| La carta " + showCards[i][0] + " es de tipo " +
                                     showCards[i][1] + " y existen " + showCards[i][2] + " de su tipo");
                         }
@@ -105,10 +106,10 @@ public class Main {
                 // Mostrando el maso del jugador ordenado
                 case "4":
                     System.out.println("| Estas son las cartas en su coleccion: ");
-                    showCards = cards.showCards(playersDesc);
+                    showCards = cards.showCards(playersDesc, true);
 
                     if(showCards.length != 0){
-                        for(int i = 0; i < showCards.length; i++){
+                        for(int i = 0; i < playersDesc.size(); i++){
                             System.out.println("| La carta " + showCards[i][0] + " es de tipo " + showCards[i][1]
                             + " y posee " + showCards[i][2] + " en su maso");
                         }
@@ -121,9 +122,9 @@ public class Main {
                 // Mostrar la coleccion
                 case "5":
                     System.out.println("| Estas son las cartas en la coleccion:\n");
-                    showCards = cards.showCards(cardsDesc);
+                    showCards = cards.showCards(cardsDesc, false);
 
-                    for(int i = 0; i < showCards.length; i++){
+                    for(int i = 0; i < cardsDesc.size(); i++){
                         System.out.println("| La carta " + showCards[i][0] + " es de tipo " + showCards[i][1]);
                     }
                     option = "";
@@ -132,10 +133,10 @@ public class Main {
                 // Mostrar la coleccion ordenada
                 case "6":
                     System.out.println("| Estas son las cartas ordenadas en la coleccion:\n");
-                    showCards = cards.showCards(cardsDesc);
+                    showCards = cards.showCards(cardsDesc, false);
                     showCards = cards.sort(showCards);
 
-                    for(int i = 0; i < showCards.length; i++){
+                    for(int i = 0; i < cardsDesc.size(); i++){
                         System.out.println( i +"| La carta " + showCards[i][0] + " es de tipo " + showCards[i][1]);
                     }
                     option = "";

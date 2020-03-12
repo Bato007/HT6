@@ -13,7 +13,7 @@ public class Factory{
      * @param mapType es la instancia que quiere
      * @return una instancia de un mapa
      */
-    public MyMap<String, String[]> getMyMap(String mapType){
+    public MyMap<String, String> getMyMap(String mapType){
 
         switch (mapType){
             case "1":
